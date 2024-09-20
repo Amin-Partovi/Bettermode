@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { usePostDetailsQuery } from "../queries";
-import { Button } from "../components/elements";
+import { Badge, Button } from "../components/elements";
 
 const PostDetailsPage = () => {
   const { id } = useParams();
@@ -10,6 +10,7 @@ const PostDetailsPage = () => {
   return (
     <div>
       <Button isLoading>button</Button>
+      <Badge>Not Featured</Badge>
     </div>
   );
 };
