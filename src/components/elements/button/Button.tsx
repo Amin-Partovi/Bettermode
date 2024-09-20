@@ -49,9 +49,9 @@ const Button = ({
       )}
 
       <div className={classNames("btn-content ", { "opacity-0": isLoading })}>
-        {iconRight}
-        {children && <div>{children}</div>}
         {iconLeft}
+        {children && <div>{children}</div>}
+        {iconRight}
       </div>
     </button>
   );

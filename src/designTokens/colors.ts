@@ -79,5 +79,6 @@ export const colors = {
     900: "#101828",
     1000: "#0D121C",
   },
+  white: "#FFFFFF",
   transparent: "transparent",
 };

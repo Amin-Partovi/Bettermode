@@ -36,15 +36,40 @@ export const GET_MEMBER_POST = gql(/* GraphQL */ `
           id
           title
           description
+          publishedAt
 
           reactions {
             count
             reacted
+          }
+          owner {
+            member {
+              name
+
+              profilePicture {
+                ... on Image {
+                  url
+                }
+              }
+            }
+          }
+          tags {
+            title
+          }
+
+          fields {
+            key
+            value
+            relationEntities {
+              medias {
+                ... on Image {
+                  url
+                }
+              }
+            }
           }
         }
       }
     }
   }
 `);
-
-

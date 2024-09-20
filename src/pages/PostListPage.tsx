@@ -1,13 +1,16 @@
 import { InView } from "react-intersection-observer";
 
+import { LoaderIcon } from "lucide-react";
+import { Card } from "../components/elements";
+import { PostCard } from "../components/fragments";
 import {
   useDislikePostMutation,
   useLikePostMutation,
   usePostsQuery,
 } from "../queries";
-import { Link } from "react-router-dom";
+import { strings } from "../utils/strings";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 function PostListPage() {
   const postsParams = {
@@ -16,7 +19,7 @@ function PostListPage() {
     memberId: import.meta.env.VITE_MEMBER_ID,
   };
 
-  const { data, fetchMore } = usePostsQuery(postsParams);
+  const { data, fetchMore, loading } = usePostsQuery(postsParams);
 
   const { likePost } = useLikePostMutation(postsParams);
   const { dislikePost } = useDislikePostMutation(postsParams);
@@ -39,40 +42,45 @@ function PostListPage() {
     });
   }
 
+  if (loading) {
+    return (
+      <div className="bg-primary-50 w-full h-full flex justify-center items-center">
+        <LoaderIcon width={32} height={32} className="animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col">
-      {data?.memberPosts.edges?.map((edge, index, arr) => (
-        <InView
-          key={index}
-          onChange={(inView) => {
-            if (inView) handleFetchMore(edge.cursor);
-          }}
-        >
-          {({ ref }) => (
-            <Link key={edge.node.id} to={`/${edge.node.id}`}>
-              <div
-                role="button"
-                className="border border-red-400 m-40 text-lg"
-                ref={index === arr.length - 1 ? ref : null}
-              >
-                {edge.node.title} - {edge.node.reactions?.length}
-                <button
-                  onClick={
-                    edge.node.reactions?.length &&
-                    edge.node.reactions?.length > 0
-                      ? () => dislikePost(edge.node.id)
-                      : () => likePost(edge.node.id)
-                  }
-                  className="border border-blue-400 p-2"
-                >
-                  react
-                </button>
+    <main className="grid grid-cols-4 bg-primary-50 gap-8 p-4 sm:p-8 items-start">
+      <Card className="col-span-1 min-h-96 hidden lg:block">
+        <span className="text-3xl font-semibold">{strings.MENU}</span>
+      </Card>
+
+      <div className="col-span-4 md:col-span-3 lg:col-span-2 flex flex-col gap-8 ">
+        {data?.memberPosts.edges?.map((edge, index, arr) => (
+          <InView
+            key={index}
+            onChange={(inView) => {
+              if (inView) handleFetchMore(edge.cursor);
+            }}
+          >
+            {({ ref }) => (
+              <div ref={index === arr.length - 2 ? ref : null}>
+                <PostCard
+                  post={edge.node}
+                  onLike={likePost}
+                  onDislike={dislikePost}
+                />
               </div>
-            </Link>
-          )}
-        </InView>
-      ))}
-    </div>
+            )}
+          </InView>
+        ))}
+      </div>
+
+      <Card className="col-span-1 min-h-72 hidden md:block">
+        <span className="text-3xl font-semibold">{strings.ABOUT}</span>
+      </Card>
+    </main>
   );
 }
 

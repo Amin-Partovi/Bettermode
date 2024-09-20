@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { ImgHTMLAttributes } from "react";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
-  size: "sm" | "md";
+  size?: "sm" | "md";
 }
 
 const Avatar = ({ size = "sm", ...props }: Props) => {

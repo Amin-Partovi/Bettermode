@@ -2,6 +2,6 @@
 
 @layer components {
   .input {
-    @apply px-4 py-2 bg-gray-300 rounded-lg border-none outline-none active:outline-none w-full placeholder:text-gray-700;
+    @apply px-4 py-2 bg-gray-200 rounded-lg border-none outline-none active:outline-none w-full placeholder:text-gray-700;
   }
 }
