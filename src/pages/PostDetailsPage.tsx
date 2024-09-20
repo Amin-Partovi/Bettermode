@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { usePostDetailsQuery } from "../queries";
-import { Badge, Button, Input } from "../components/elements";
+import { Badge, Button, Card, Input } from "../components/elements";
 
 const PostDetailsPage = () => {
   const { id } = useParams();
@@ -12,6 +12,7 @@ const PostDetailsPage = () => {
       <Button isLoading>button</Button>
       <Badge>Not Featured</Badge>
       <Input placeholder="What are your thoughts?" />
+      <Card>hiiiiiiiiiiiiii</Card>
     </div>
   );
 };
