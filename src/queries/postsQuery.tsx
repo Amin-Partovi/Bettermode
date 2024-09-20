@@ -12,6 +12,7 @@ export const usePostsQuery = (params: PostsParams) => {
 };
 
 export const GET_MEMBER_POST = gql(/* GraphQL */ `
+
   query getMemberPost(
     $after: String
     $before: String

@@ -7,4 +7,5 @@ export const strings = {
   LIKED: "Liked",
   MENU: "Menu",
   ABOUT: "About",
+  MY_ARTICLES: "my articles",
 };
