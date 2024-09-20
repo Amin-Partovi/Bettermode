@@ -1,0 +1,21 @@
+@tailwind components;
+
+@layer components {
+  .button {
+    @apply px-6 h-10  font-medium border   transition-all text-sm border-gray-300 rounded-full relative;
+  }
+  .btn-filled {
+    @apply bg-primary-100;
+  }
+  .btn-outline {
+    @apply bg-transparent text-gray-1000 hover:bg-primary-50;
+  }
+
+  .btn-content {
+    @apply flex items-center justify-center gap-2 [&>*]:shrink-0;
+  }
+
+  .btn-loading {
+    @apply absolute inset-0  flex items-center justify-center;
+  }
+}

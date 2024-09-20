@@ -39,7 +39,6 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/:id" element={<PostDetailsPage />} />
         </Routes>
       </BrowserRouter>
-      ,
     </ApolloProvider>
   </StrictMode>
 );
