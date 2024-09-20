@@ -2,8 +2,9 @@ import { BellIcon, SendIcon, ThumbsUp } from "lucide-react";
 import { GetMemberPostQuery } from "../../../__generated__/graphql";
 import { strings } from "../../../utils/strings";
 import { Badge, Button, Card, Input } from "../../elements";
-import ContentFactory from "./ContentFactory";
-import PostCardHeader from "./PostCardHeader";
+import PostContentFactory from "../postContentFactory/PostContentFactory";
+import PostMetaData from "../postMetaData/PostMetaData";
+import React from "react";
 
 export type Node = NonNullable<
   NonNullable<
@@ -20,10 +21,10 @@ const PostCard = ({ post, onLike, onDislike }: Props) => {
   const isLiked = post.reactions?.length && post.reactions?.length > 0;
   return (
     <Card className="flex flex-col gap-6">
-      <PostCardHeader owner={post.owner} publishedAt={post.publishedAt} />
+      <PostMetaData owner={post.owner} publishedAt={post.publishedAt} />
 
       {post.fields?.map((field, index) => (
-        <ContentFactory field={field} key={index} id={post.id} />
+        <PostContentFactory field={field} key={index} id={post.id} />
       ))}
 
       {post.tags?.map((tag, index) => (
@@ -63,4 +64,4 @@ const PostCard = ({ post, onLike, onDislike }: Props) => {
   );
 };
 
-export default PostCard;
+export default React.memo(PostCard);

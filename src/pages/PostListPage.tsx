@@ -1,7 +1,6 @@
 import { InView } from "react-intersection-observer";
 
-import { LoaderIcon } from "lucide-react";
-import { Card } from "../components/elements";
+import { Card, Loading } from "../components/elements";
 import { PostCard } from "../components/fragments";
 import {
   useDislikePostMutation,
@@ -12,19 +11,23 @@ import { strings } from "../utils/strings";
 
 const PAGE_SIZE = 5;
 
-function PostListPage() {
-  const postsParams = {
-    hasParent: false,
-    limit: PAGE_SIZE,
-    memberId: import.meta.env.VITE_MEMBER_ID,
-  };
+const postsParams = {
+  hasParent: false,
+  limit: PAGE_SIZE,
+  memberId: import.meta.env.VITE_MEMBER_ID,
+};
 
-  const { data, fetchMore, loading } = usePostsQuery(postsParams);
+function PostListPage() {
+  const { data, fetchMore, loading, error } = usePostsQuery(postsParams);
 
   const { likePost } = useLikePostMutation(postsParams);
   const { dislikePost } = useDislikePostMutation(postsParams);
 
-  function handleFetchMore(cursor: string) {
+  function handleFetchMore(inView: boolean, cursor: string) {
+    if (!inView) {
+      return;
+    }
+
     fetchMore({
       variables: {
         after: cursor,
@@ -43,11 +46,11 @@ function PostListPage() {
   }
 
   if (loading) {
-    return (
-      <div className="bg-primary-50 w-full h-full flex justify-center items-center">
-        <LoaderIcon width={32} height={32} className="animate-spin" />
-      </div>
-    );
+    return <Loading />;
+  }
+
+  if (error || !data) {
+    return <span>{strings.ERROR}</span>;
   }
 
   return (
@@ -57,11 +60,11 @@ function PostListPage() {
       </Card>
 
       <div className="col-span-4 md:col-span-3 lg:col-span-2 flex flex-col gap-8 ">
-        {data?.memberPosts.edges?.map((edge, index, arr) => (
+        {data.memberPosts.edges?.map((edge, index, arr) => (
           <InView
             key={index}
             onChange={(inView) => {
-              if (inView) handleFetchMore(edge.cursor);
+              handleFetchMore(inView, edge.cursor);
             }}
           >
             {({ ref }) => (

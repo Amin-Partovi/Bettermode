@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { GetMemberPostQuery } from "../../../__generated__/graphql";
 import { Badge } from "../../elements";
+import classNames from "classnames";
 
 export type Field = NonNullable<
   NonNullable<
@@ -10,8 +11,14 @@ export type Field = NonNullable<
   >["fields"]
 >[number];
 
-const ContentFactory = ({ field, id }: { field: Field; id: string }) => {
-  switch (field?.key) {
+interface Props {
+  field: Field;
+  id: string;
+  showDetails?: boolean;
+}
+
+const PostContentFactory = ({ field, id, showDetails = false }: Props) => {
+  switch (field.key) {
     case "coverImage":
       return (
         <>
@@ -32,10 +39,14 @@ const ContentFactory = ({ field, id }: { field: Field; id: string }) => {
       );
     case "content":
       return (
-        <div
-          className="line-clamp-6"
-          dangerouslySetInnerHTML={{ __html: field.value ?? "" }}
-        />
+        <>
+          {field.value ? (
+            <div
+              className={classNames({ "line-clamp-6": !showDetails })}
+              dangerouslySetInnerHTML={{ __html: field.value }}
+            />
+          ) : null}
+        </>
       );
     case "featured":
       return <Badge>{field.key}</Badge>;
@@ -44,4 +55,4 @@ const ContentFactory = ({ field, id }: { field: Field; id: string }) => {
   }
 };
 
-export default ContentFactory;
+export default PostContentFactory;

@@ -8,4 +8,5 @@ export const strings = {
   MENU: "Menu",
   ABOUT: "About",
   MY_ARTICLES: "my articles",
+  ERROR: "Something goes wrong!",
 };

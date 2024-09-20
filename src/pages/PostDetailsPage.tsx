@@ -1,25 +1,22 @@
-import {
-  ArrowLeft,
-  LoaderIcon
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { Card } from "../components/elements";
-import ContentFactory from "../components/fragments/postCard/ContentFactory";
+import { Card, Loading } from "../components/elements";
+
 import { usePostDetailsQuery } from "../queries";
 import { strings } from "../utils/strings";
+import { PostContentFactory, PostMetaData } from "../components/fragments";
 
 const PostDetailsPage = () => {
   const { id } = useParams();
-  const { data, loading } = usePostDetailsQuery(id as string);
+  const { data, loading, error } = usePostDetailsQuery(id as string);
 
   if (loading) {
-    return (
-      <div className="bg-primary-50 w-full h-full flex justify-center items-center">
-        <LoaderIcon width={32} height={32} className="animate-spin" />
-      </div>
-    );
+    return <Loading />;
   }
 
+  if (error || !data) {
+    return <span>{strings.ERROR}</span>;
+  }
   return (
     <main className="grid grid-cols-4 bg-primary-50 h-full gap-8 p-4 sm:p-8 items-start">
       <Card className="col-span-1 min-h-96 hidden md:block">
@@ -31,8 +28,19 @@ const PostDetailsPage = () => {
           <ArrowLeft />
           <span>{strings.MY_ARTICLES}</span>
         </Link>
-        {data?.post.fields?.map((field, index) => (
-          <ContentFactory field={field} key={index} id={id as string} />
+
+        <PostMetaData
+          owner={data.post.owner}
+          publishedAt={data.post.publishedAt}
+        />
+
+        {data.post.fields?.map((field, index) => (
+          <PostContentFactory
+            field={field}
+            key={index}
+            id={id as string}
+            showDetails
+          />
         ))}
       </Card>
     </main>

@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { gql } from "../__generated__";
 import { GetMemberPostQuery } from "../__generated__/graphql";
 import { GET_MEMBER_POST, PostsParams } from "./postsQuery";
+import { useCallback } from "react";
 
 function updatePosts(
   data: GetMemberPostQuery,
@@ -32,57 +33,64 @@ function updatePosts(
 export const useLikePostMutation = (postParams: PostsParams) => {
   const [mutate, { data, loading, error }] = useMutation(ADD_REACTION);
 
-  function likePost(postId: string) {
-    return mutate({
-      variables: {
-        input: { reaction: "+1", overrideSingleChoiceReactions: true },
-        postId: postId,
-      },
-      update(cache) {
-        const cachedData = cache.readQuery({
-          query: GET_MEMBER_POST,
-          variables: postParams,
-        });
-        if (cachedData)
-          cache.writeQuery({
+  const likePost = useCallback(
+    (postId: string) => {
+      return mutate({
+        variables: {
+          input: { reaction: "+1", overrideSingleChoiceReactions: true },
+          postId: postId,
+        },
+        update(cache) {
+          const cachedData = cache.readQuery({
             query: GET_MEMBER_POST,
             variables: postParams,
-            data: updatePosts(cachedData, postId, [
-              {
-                count: 1,
-                reacted: true,
-              },
-            ]),
           });
-      },
-    });
-  }
+          if (cachedData)
+            cache.writeQuery({
+              query: GET_MEMBER_POST,
+              variables: postParams,
+              data: updatePosts(cachedData, postId, [
+                {
+                  count: 1,
+                  reacted: true,
+                },
+              ]),
+            });
+        },
+      });
+    },
+    [postParams, mutate]
+  );
+
   return { likePost, data, loading, error };
 };
 
 export const useDislikePostMutation = (postParams: PostsParams) => {
   const [mutate, { data, loading, error }] = useMutation(REMOVE_REACTION);
 
-  function dislikePost(postId: string) {
-    return mutate({
-      variables: {
-        reaction: "+1",
-        postId: postId,
-      },
-      update(cache) {
-        const cachedData = cache.readQuery({
-          query: GET_MEMBER_POST,
-          variables: postParams,
-        });
-        if (cachedData)
-          cache.writeQuery({
+  const dislikePost = useCallback(
+    (postId: string) => {
+      return mutate({
+        variables: {
+          reaction: "+1",
+          postId: postId,
+        },
+        update(cache) {
+          const cachedData = cache.readQuery({
             query: GET_MEMBER_POST,
             variables: postParams,
-            data: updatePosts(cachedData, postId, []),
           });
-      },
-    });
-  }
+          if (cachedData)
+            cache.writeQuery({
+              query: GET_MEMBER_POST,
+              variables: postParams,
+              data: updatePosts(cachedData, postId, []),
+            });
+        },
+      });
+    },
+    [postParams, mutate]
+  );
 
   return { dislikePost, data, loading, error };
 };
