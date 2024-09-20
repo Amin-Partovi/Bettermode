@@ -1,14 +1,15 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloProvider,
   createHttpLink,
+  InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./index.css";
+import { PostDetailsPage, PostListPage } from "./pages";
 
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_BASE_URL,
@@ -31,7 +32,14 @@ const client = new ApolloClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<PostListPage />} />
+
+          <Route path="/:id" element={<PostDetailsPage />} />
+        </Routes>
+      </BrowserRouter>
+      ,
     </ApolloProvider>
   </StrictMode>
 );

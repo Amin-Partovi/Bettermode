@@ -4,3 +4,4 @@ export {
   useDislikePostMutation,
   useLikePostMutation,
 } from "./postReactionMutation";
+export { usePostDetailsQuery } from "./postDetailsQuery";
