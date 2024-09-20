@@ -1,17 +1,17 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "../__generated__";
 
-interface Params {
+export interface PostsParams {
   memberId: string;
   limit: number;
   hasParent: boolean;
 }
 
-export const usePostsQuery = (params: Params) => {
+export const usePostsQuery = (params: PostsParams) => {
   return useQuery(GET_MEMBER_POST, { variables: params });
 };
 
-const GET_MEMBER_POST = gql(/* GraphQL */ `
+export const GET_MEMBER_POST = gql(/* GraphQL */ `
   query getMemberPost(
     $after: String
     $before: String
@@ -36,8 +36,15 @@ const GET_MEMBER_POST = gql(/* GraphQL */ `
           id
           title
           description
+
+          reactions {
+            count
+            reacted
+          }
         }
       }
     }
   }
 `);
+
+
