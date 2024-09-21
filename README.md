@@ -42,38 +42,47 @@ the structure of the project is inspired by Atomic Design.
 
 .
 └── src/
-├── components/
-│ ├── elements/
-│ │ ├── button/
-│ │ │ ├── Button.tsx
-│ │ │ └── Button.test.tsx
-│ │ ├── input
-│ │ ├── ...
-│ │ └── index.ts
-│ ├── fragments/
-│ │ ├── postCard/
-│ │ │ ├── PostCard.tsx
-│ │ │ └── PostCard.test.tsx
-│ │ ├── ...
-│ │ └── index.ts
-│ ├── layout/
-│ │ ├── Layout.tsx
-├── utils/
-│ ├── strings
-├── pages/
-│ ├── PostDetailsPage.tsx
-│ ├── ...
-│ └── index.ts
-├── queries/
-│ ├── PostDetailsQuery.tsx
-│ ├── ...
-│ └── index.ts
-└── styles/
-│ ├── button.css
-│ └── input.css
-
+    ├── components/
+    │   ├── elements/
+    │   │   ├── button/
+    │   │   │   ├── Button.tsx
+    │   │   │   └── Button.test.tsx
+    │   │   ├── input/
+    │   │   │   └── Input.tsx
+    │   │   ├── ...
+    │   │   └── index.ts
+    │   ├── fragments/
+    │   │   ├── postCard/
+    │   │   │   ├── PostCard.tsx
+    │   │   │   └── PostCard.test.tsx
+    │   │   ├── ...
+    │   │   └── index.ts
+    │   └── layouts/
+    │       ├── header/
+    │       │   └── Header.tsx
+    │       ├── ...
+    │       └── layout/
+    │           └── Layout.tsx
+    ├── designTokens/
+    │   ├── fontSizes.ts
+    │   └── ...
+    ├── pages/
+    │   ├── PostListPage.tsx
+    │   ├── ...
+    │   └── index.ts
+    ├── styles/
+    │   ├── button.css
+    │   └── ...
+    ├── utils/
+    │   ├── strings
+    │   └── ...
+    └── queries/
+        ├── postsQuery.ts
+        ├── ...
+        └── index.ts
 
 components folder divided to four modules as following:
+
 
 1.  Elements: This folder contains shared components, also known as common components, that cannot be further divided into smaller independent components.
 2.  Fragments: Fragments are reusable components that are built using elements. They combine multiple elements to form more complex and self-contained components.
