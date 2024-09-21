@@ -40,46 +40,47 @@ Then stop the container using:
 
 the structure of the project is inspired by Atomic Design.
 
-.
-└── src/
-    ├── components/
-    │   ├── elements/
-    │   │   ├── button/
-    │   │   │   ├── Button.tsx
-    │   │   │   └── Button.test.tsx
-    │   │   ├── input/
-    │   │   │   └── Input.tsx
-    │   │   ├── ...
-    │   │   └── index.ts
-    │   ├── fragments/
-    │   │   ├── postCard/
-    │   │   │   ├── PostCard.tsx
-    │   │   │   └── PostCard.test.tsx
-    │   │   ├── ...
-    │   │   └── index.ts
-    │   └── layouts/
-    │       ├── header/
-    │       │   └── Header.tsx
-    │       ├── ...
-    │       └── layout/
-    │           └── Layout.tsx
-    ├── designTokens/
-    │   ├── fontSizes.ts
-    │   └── ...
-    ├── pages/
-    │   ├── PostListPage.tsx
-    │   ├── ...
-    │   └── index.ts
-    ├── styles/
-    │   ├── button.css
-    │   └── ...
-    ├── utils/
-    │   ├── strings
-    │   └── ...
-    └── queries/
-        ├── postsQuery.ts
-        ├── ...
-        └── index.ts
+
+        .
+        └── src/
+            ├── components/
+            │   ├── elements/
+            │   │   ├── button/
+            │   │   │   ├── Button.tsx
+            │   │   │   └── Button.test.tsx
+            │   │   ├── input/
+            │   │   │   └── Input.tsx
+            │   │   ├── ...
+            │   │   └── index.ts
+            │   ├── fragments/
+            │   │   ├── postCard/
+            │   │   │   ├── PostCard.tsx
+            │   │   │   └── PostCard.test.tsx
+            │   │   ├── ...
+            │   │   └── index.ts
+            │   └── layouts/
+            │       ├── header/
+            │       │   └── Header.tsx
+            │       ├── ...
+            │       └── layout/
+            │           └── Layout.tsx
+            ├── designTokens/
+            │   ├── fontSizes.ts
+            │   └── ...
+            ├── pages/
+            │   ├── PostListPage.tsx
+            │   ├── ...
+            │   └── index.ts
+            ├── styles/
+            │   ├── button.css
+            │   └── ...
+            ├── utils/
+            │   ├── strings
+            │   └── ...
+            └── queries/
+                ├── postsQuery.ts
+                ├── ...
+                └── index.ts
 
 components folder divided to four modules as following:
 
