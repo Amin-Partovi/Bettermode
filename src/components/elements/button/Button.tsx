@@ -43,6 +43,7 @@ const Button = ({
             visible: isLoading,
             invisible: !isLoading,
           })}
+          data-testid="loading-spinner"
         >
           <LoaderIcon className="animate-spin" width={20} height={20} />
         </div>

@@ -15,6 +15,7 @@ const PostMetaData = ({ owner, publishedAt }: Props) => {
     return;
   }
 
+
   return (
     <div className="flex gap-4">
       {owner?.member?.profilePicture?.__typename === "Image" && (

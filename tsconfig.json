@@ -1,4 +1,11 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "types": ["node"]
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

@@ -18,40 +18,45 @@ interface Props {
 }
 
 const PostContentFactory = ({ field, id, showDetails = false }: Props) => {
+  if (!field || !field.key) return null;
+
+  const renderCoverImage = () => {
+    const image = field.relationEntities?.medias?.[0];
+    if (image?.__typename === "Image" && image.url) {
+      return <img src={image.url} alt={field.key} className="rounded-lg" />;
+    }
+    return null;
+  };
+
+  const renderTitle = () => (
+    <Link to={`/${id}`}>
+      <span className="text-2xl font-semibold">{field.value}</span>
+    </Link>
+  );
+
+  const renderContent = () => {
+    if (!field.value) return null;
+    return (
+      <div
+        className={classNames({ "line-clamp-6": !showDetails })}
+        dangerouslySetInnerHTML={{ __html: field.value }}
+      />
+    );
+  };
+
+  const renderFeaturedBadge = () => <Badge>{field.key}</Badge>;
+
   switch (field.key) {
     case "coverImage":
-      return (
-        <>
-          {field.relationEntities?.medias[0].__typename === "Image" && (
-            <img
-              src={field.relationEntities?.medias[0].url}
-              alt={field.key}
-              className="rounded-lg"
-            />
-          )}
-        </>
-      );
+      return renderCoverImage();
     case "title":
-      return (
-        <Link to={`/${id}`}>
-          <span className="text-2xl font-semibold">{field.value}</span>
-        </Link>
-      );
+      return renderTitle();
     case "content":
-      return (
-        <>
-          {field.value ? (
-            <div
-              className={classNames({ "line-clamp-6": !showDetails })}
-              dangerouslySetInnerHTML={{ __html: field.value }}
-            />
-          ) : null}
-        </>
-      );
+      return renderContent();
     case "featured":
-      return <Badge>{field.key}</Badge>;
+      return renderFeaturedBadge();
     default:
-      return;
+      return null;
   }
 };
 
