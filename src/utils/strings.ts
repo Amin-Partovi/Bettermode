@@ -9,4 +9,5 @@ export const strings = {
   ABOUT: "About",
   MY_ARTICLES: "my articles",
   ERROR: "Something goes wrong!",
+  HEADER_TEXT: "Bettermode Senior Frontend Developer Assignment",
 };
