@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { gql } from "../__generated__";
-import { GetMemberPostQuery } from "../__generated__/graphql";
+import { ActionStatus, GetMemberPostQuery } from "../__generated__/graphql";
 import { GET_MEMBER_POST, PostsParams } from "./postsQuery";
 import { useCallback } from "react";
 
@@ -40,6 +40,9 @@ export const useLikePostMutation = (postParams: PostsParams) => {
           input: { reaction: "+1", overrideSingleChoiceReactions: true },
           postId: postId,
         },
+        optimisticResponse: {
+          addReaction: { status: ActionStatus.Succeeded, __typename: "Action" },
+        },
         update(cache) {
           const cachedData = cache.readQuery({
             query: GET_MEMBER_POST,
@@ -74,6 +77,12 @@ export const useDislikePostMutation = (postParams: PostsParams) => {
         variables: {
           reaction: "+1",
           postId: postId,
+        },
+        optimisticResponse: {
+          removeReaction: {
+            status: ActionStatus.Succeeded,
+            __typename: "Action",
+          },
         },
         update(cache) {
           const cachedData = cache.readQuery({
